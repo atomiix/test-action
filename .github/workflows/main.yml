@@ -1,0 +1,17 @@
+on: [push]
+
+jobs:
+  apache-job:
+    runs-on: ubuntu-latest
+    name: Test Apache job
+    services:
+      apache:
+        image: httpd:2.4
+        ports:
+          - 8081:80
+        options: -v ${{ github.workspace }}:/usr/local/apache2/htdocs/
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v2
+      - name: 'Curl content'
+        run: curl http://localhost:8081/
